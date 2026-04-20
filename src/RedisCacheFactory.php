@@ -18,7 +18,12 @@ class RedisCacheFactory implements CacheFactory
         $this->redis_client = $redis_client;
     }
 
-    public function create(string $service, array $params = []): CacheInterface
+    /**
+     * @param  string   $service 
+     * @param  array    $params  
+     * @return \Psr\SimpleCache\CacheInterface
+     */
+    public function create($service, array $params = []): CacheInterface
     {
         $namespace = isset($params['namespace'])
             ? $params['namespace'] . '_' . md5(BASE_PATH)
