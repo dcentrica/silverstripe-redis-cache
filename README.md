@@ -23,7 +23,7 @@ session.save_handler  = redis
 session.save_path     = {your_redis_url}
 ```
 
-In containerised environments, the [Predis](https://github.com/predis/predis) library is needed which is available from Pecl.
+In containerised environments, the [Redis](https://pecl.php.net/package/redis) PHP extensions which is available from Pecl.
 
 ## Installation and usage
 
