@@ -11,8 +11,16 @@ use Symfony\Component\Cache\Psr16Cache;
 
 class RedisCacheFactory implements CacheFactory
 {
+    /**
+     * Redis client.
+     *
+     * @var \Predis\Client $redis_client 
+     */
     protected $redis_client;
 
+    /**
+     * @param  \Predis\Client $redis_client 
+     */
     public function __construct(Client $redis_client)
     {
         $this->redis_client = $redis_client;
@@ -20,16 +28,16 @@ class RedisCacheFactory implements CacheFactory
 
     /**
      * @param  string   $service 
-     * @param  array    $params  
+     * @param  string[] $params  
      * @return \Psr\SimpleCache\CacheInterface
      */
     public function create($service, array $params = []): CacheInterface
     {
-        $namespace = isset($params['namespace'])
-            ? $params['namespace'] . '_' . md5(BASE_PATH)
-            : md5(BASE_PATH);
+        $namespace = !empty($params['namespace'])
+            ? sprintf('%s_%s', $params['namespace'], hash('sha256', BASE_PATH))
+            : hash('sha256', BASE_PATH);
 
-        $defaultLifetime = isset($params['defaultLifetime'])
+        $defaultLifetime = !empty($params['defaultLifetime'])
             ? $params['defaultLifetime']
             : 0;
 
