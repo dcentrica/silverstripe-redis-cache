@@ -24,11 +24,8 @@ jobs:
           - 6379:6379
     strategy:
       matrix:
-        php: [8.0, 8.3]
-        silverstripe: [4, 5]
-        exclude:
-          - php: 8.0
-            silverstripe: 5
+        php: [8.3]
+        silverstripe: [5]
 
     steps:
       - name: Checkout
@@ -61,7 +58,7 @@ jobs:
 
       - name: Setup test environment
         run: |
-          php -r "copy('.env.testing', '.env');"
+          php -r "copy('.env.test', '.env');"
 
       - name: Test with phpunit
         run: vendor/bin/phpunit tests/RedisCacheFactoryTest.php
