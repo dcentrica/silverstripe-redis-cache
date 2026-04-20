@@ -3,6 +3,7 @@
 namespace Zeitpulse;
 
 use Predis\Client;
+use Psr\SimpleCache\CacheInterface;
 use SilverStripe\Core\Cache\CacheFactory;
 use SilverStripe\Core\Injector\Injector;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
@@ -17,7 +18,12 @@ class RedisCacheFactory implements CacheFactory
         $this->redis_client = $redis_client;
     }
 
-    public function create($service, array $params = array())
+    /**
+     * @param  string   $service 
+     * @param  array    $params  
+     * @return \Psr\SimpleCache\CacheInterface
+     */
+    public function create($service, array $params = []): CacheInterface
     {
         $namespace = isset($params['namespace'])
             ? $params['namespace'] . '_' . md5(BASE_PATH)
