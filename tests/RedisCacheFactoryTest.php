@@ -10,6 +10,7 @@ class RedisCacheFactoryTest extends SapphireTest
     protected function setUp(): void
     {
         parent::setUp();
+        
         Injector::inst()
             ->load([
                 'RedisClient' => [
